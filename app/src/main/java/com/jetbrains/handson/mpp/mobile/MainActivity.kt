@@ -17,6 +17,12 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         val presenter = ApplicationPresenter()
         presenter.onViewTaken(this)
 
+        val listOfStations = listOf(Station("EDB","Edinburgh Waverley"),
+            Station("KGX","Kings Cross"),
+            Station("DAR","Darlington"),
+            Station("YRK","York"),
+            Station("NCL","Newcastle"))
+
         val spinner: Spinner = findViewById(R.id.departure_spinner) // Create an ArrayAdapter using the string array and a default spinner layout.
 
         spinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
@@ -25,6 +31,8 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
                 var v = parent?.getItemAtPosition(position).toString()
             }
         }
+
+        //ArrayAdapter<Station> adapter
 
         ArrayAdapter.createFromResource(this, R.array.stations, android.R.layout.simple_spinner_item
         ).also { adapter -> // Specify the layout to use when the list of choices appears.

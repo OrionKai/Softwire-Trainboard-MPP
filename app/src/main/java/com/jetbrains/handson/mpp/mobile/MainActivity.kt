@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
 
         val spinner: Spinner = findViewById(R.id.departure_spinner) // Create an ArrayAdapter using the string array and a default spinner layout.
 
-
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, listOfStations.map { it.getName() })
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)

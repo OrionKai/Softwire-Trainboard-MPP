@@ -8,7 +8,15 @@ class LiveTrainTimeFetcher {
         this.departureStation = station
     }
 
+    fun getDepartureStation(): Station {
+        return departureStation
+    }
+
     fun setArrivalStation(station : Station) {
         this.arrivalStation = station
+    }
+
+    fun getArrivalsStation(): Station {
+        return arrivalStation
     }
 }

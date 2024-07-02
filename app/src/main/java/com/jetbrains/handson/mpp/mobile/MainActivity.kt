@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity(), ApplicationContract.View {
 
-    fun initStationSpinner(spinnerId: Int, listOfStations: List<Station>, setter: (Station) -> Unit): Spinner {
+    private fun initStationSpinner(spinnerId: Int, listOfStations: List<Station>, setter: (Station) -> Unit) {
         val spinner: Spinner = findViewById(spinnerId) // Create an ArrayAdapter using the string array and a default spinner layout.
 
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, listOfStations.map { it.getName() })
@@ -30,8 +30,6 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
                 setter(selectedStation)
             }
         }
-
-        return spinner
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +37,7 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         setContentView(R.layout.activity_main)
 
         val presenter = ApplicationPresenter()
+        val fetcher = presenter.getFetcher()
         presenter.onViewTaken(this)
 
         val listOfStations = listOf(Station("EDB","Edinburgh Waverley"),
@@ -47,31 +46,15 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
             Station("YRK","York"),
             Station("NCL","Newcastle"))
 
-        val fetcher = presenter.getFetcher()
+        initStationSpinner(R.id.departure_spinner, listOfStations, fetcher::setDepartureStation)
+        initStationSpinner(R.id.arrival_spinner, listOfStations, fetcher::setArrivalStation)
 
-        val departuresSpinner: Spinner = initStationSpinner(R.id.departure_spinner, listOfStations,
-            fetcher::setDepartureStation)
-        val arrivalsSpinner : Spinner = initStationSpinner(R.id.arrival_spinner, listOfStations,
-            fetcher::setArrivalStation)
-
-        val button : Button = findViewById(R.id.submit_button)
-        button.setOnClickListener {
-            val urlBuilder = Uri.Builder()
-            urlBuilder.scheme("https")
-                .authority("www.lner.co.uk")
-                .appendPath("travel-information")
-                .appendPath("travelling-now")
-                .appendPath("live-train-times")
-                .appendPath("depart")
-                .appendPath(fetcher.getDepartureStation().getId())
-                .appendPath(fetcher.getArrivalsStation().getId())
-                .fragment("LiveDepResults")
-            val queryUrl = urlBuilder.build().toString()
+        val submitButton : Button = findViewById(R.id.submit_button)
+        submitButton.setOnClickListener {
             val urlIntent = Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse(queryUrl)
+                Uri.parse(fetcher.getLiveTrainsURL())
             )
-
             startActivity(urlIntent)
         }
     }

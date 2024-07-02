@@ -1,5 +1,6 @@
 package com.jetbrains.handson.mpp.mobile
 
+
 class LiveTrainTimeFetcher {
     private lateinit var departureStation : Station
     private lateinit var arrivalStation : Station
@@ -8,15 +9,11 @@ class LiveTrainTimeFetcher {
         this.departureStation = station
     }
 
-    fun getDepartureStation(): Station {
-        return departureStation
-    }
-
     fun setArrivalStation(station : Station) {
         this.arrivalStation = station
     }
 
-    fun getArrivalsStation(): Station {
-        return arrivalStation
+    fun getLiveTrainsURL() : String {
+        return "https://www.lner.co.uk/travel-information/travelling-now/live-train-times/depart/${this.departureStation.getId()}/${this.arrivalStation.getId()}#LiveDepResults"
     }
 }

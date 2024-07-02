@@ -1,8 +1,6 @@
 package com.jetbrains.handson.mpp.mobile
 
-class Station(id: String, name: String) {
-    private val name = name
-    private val id = id
+class Station(private val id: String, private val name: String) {
 
     fun getId() : String {
         return id

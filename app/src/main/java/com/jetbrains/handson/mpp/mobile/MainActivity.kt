@@ -37,13 +37,13 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         val presenter = ApplicationPresenter()
         presenter.onViewTaken(this)
 
-        val fetcher = LiveTrainTimeFetcher()
-
         val listOfStations = listOf(Station("EDB","Edinburgh Waverley"),
             Station("KGX","Kings Cross"),
             Station("DAR","Darlington"),
             Station("YRK","York"),
             Station("NCL","Newcastle"))
+
+        val fetcher = presenter.getFetcher()
 
         val departuresSpinner: Spinner = initStationSpinner(R.id.departure_spinner, listOfStations,
             fetcher::setDepartureStation)

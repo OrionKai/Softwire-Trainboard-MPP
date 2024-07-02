@@ -2,16 +2,22 @@ package com.jetbrains.handson.mpp.mobile
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Browser
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import java.text.SimpleDateFormat
+import java.util.Date
+
 
 class MainActivity : AppCompatActivity(), ApplicationContract.View {
+
+    private final val AUTH_API_KEY = "amogus"
 
     fun initStationSpinner(spinnerId: Int, listOfStations: List<Station>, setter: (Station) -> Unit): Spinner {
         val spinner: Spinner = findViewById(spinnerId) // Create an ArrayAdapter using the string array and a default spinner layout.
@@ -32,6 +38,8 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
 
         return spinner
     }
+//
+//    fun initFetchButton(buttonId: Int)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,11 +63,27 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
 
         val button : Button = findViewById(R.id.submit_button)
         button.setOnClickListener {
-            val url = "https://www.geeksforgeeks.org/how-to-open-a-url-in-androids-web-browser-in-an-android-application/"
+            val dateTimeFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+            val currentDateTimeString = dateTimeFormatter.format(Date())
+            val urlBuilder = Uri.Builder()
+            urlBuilder.scheme("https")
+                .authority("mobile-api-softwire2.lner.co.uk")
+                .appendPath("v1")
+                .appendPath("fares")
+                .appendQueryParameter("originStation", fetcher.getDepartureStation().getId())
+                .appendQueryParameter("destinationStation", fetcher.getArrivalsStation().getId())
+                .appendQueryParameter("outboundDateTime", currentDateTimeString)
+                .appendQueryParameter("numberOfChildren", "2")
+                .appendQueryParameter("numberOfAdults", "2")
+            val queryUrl = urlBuilder.build().toString()
             val urlIntent = Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse(url)
+                Uri.parse(queryUrl)
             )
+            val bundle = Bundle()
+            bundle.putString("x-api-key", AUTH_API_KEY)
+            urlIntent.putExtra(Browser.EXTRA_HEADERS, bundle)
+
             startActivity(urlIntent)
         }
     }

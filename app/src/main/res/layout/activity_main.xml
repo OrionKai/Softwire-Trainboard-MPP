@@ -14,37 +14,60 @@
             android:textAlignment="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Train Updates"
+            android:text="@string/title"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-    <Spinner
-        android:id="@+id/arrival_spinner"
+    <TextView
+        android:id="@+id/departure_text"
+        android:textSize="15sp"
+        android:textAlignment="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:layout_constraintEnd_toStartOf="@+id/departure_spinner"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf=" @+id/main_text" />
+        android:text="@string/departure"
+        app:layout_constraintStart_toStartOf="@id/main_text"
+        app:layout_constraintTop_toBottomOf="@id/main_text"
+        />
+
+    <TextView
+        android:id="@+id/arrivals_text"
+        android:textSize="15sp"
+        android:textAlignment="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/arrival"
+        app:layout_constraintEnd_toEndOf="@id/main_text"
+        app:layout_constraintTop_toBottomOf="@id/main_text"
+        />
 
     <Spinner
         android:id="@+id/departure_spinner"
-        android:layout_width="wrap_content"
+        android:layout_width="120sp"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/arrival_spinner"
-        app:layout_constraintTop_toBottomOf=" @+id/main_text"  />
+        android:layout_margin="10sp"
+        app:layout_constraintEnd_toEndOf="@id/departure_text"
+        app:layout_constraintStart_toStartOf="@id/departure_text"
+        app:layout_constraintTop_toBottomOf="@id/departure_text" />
+
+    <Spinner
+        android:id="@+id/arrival_spinner"
+        android:layout_width="120sp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        app:layout_constraintEnd_toEndOf="@id/arrivals_text"
+        app:layout_constraintStart_toStartOf="@id/arrivals_text"
+        app:layout_constraintTop_toBottomOf="@id/arrivals_text"
+        />
 
     <Button
         android:id="@+id/submit_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="10sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/departure_spinner"
-        android:text="Go" />
+        android:text="@string/go" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

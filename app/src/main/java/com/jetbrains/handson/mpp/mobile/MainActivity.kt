@@ -1,10 +1,13 @@
 package com.jetbrains.handson.mpp.mobile
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
 
@@ -49,6 +52,16 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
             fetcher::setDepartureStation)
         val arrivalsSpinner : Spinner = initStationSpinner(R.id.arrival_spinner, listOfStations,
             fetcher::setArrivalStation)
+
+        val button : Button = findViewById(R.id.submit_button)
+        button.setOnClickListener {
+            val url = "https://www.geeksforgeeks.org/how-to-open-a-url-in-androids-web-browser-in-an-android-application/"
+            val urlIntent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(url)
+            )
+            startActivity(urlIntent)
+        }
     }
 
     override fun setLabel(text: String) {

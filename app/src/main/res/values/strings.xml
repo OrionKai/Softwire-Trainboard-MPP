@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">KotlinMPP</string>
+    <string name="title">Train Updates</string>
+    <string name="departure">Departure Station</string>
+    <string name="arrival">Arrival Station</string>
+    <string name="go">Go</string>
+
 </resources>

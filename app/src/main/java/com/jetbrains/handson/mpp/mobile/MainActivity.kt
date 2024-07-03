@@ -1,8 +1,6 @@
 package com.jetbrains.handson.mpp.mobile
 
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -36,18 +34,18 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         }
     }
 
-    private fun Button.initSubmitButton(fetcher: LiveTrainTimeFetcher) {
+    private fun Button.initSubmitButton(presenter: ApplicationContract.Presenter) {
         this.setOnClickListener {
-            val urlIntent = Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse(fetcher.getLiveTrainsURL())
-            )
-            startActivity(urlIntent)
+            presenter.fetchLiveTrainTimes()
         }
     }
 
     override fun setLabel(text: String) {
         findViewById<TextView>(R.id.main_text).text = text
+    }
+
+    override fun setLiveTrainTimesInfo(text: String) {
+        findViewById<TextView>(R.id.arrivals_text).text = text
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,6 +70,6 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         binding.arrivalSpinner.initStationSpinner(stations, {station -> fetcher.arrivalStation = station},
             this)
 
-        binding.submitButton.initSubmitButton(fetcher)
+        binding.submitButton.initSubmitButton(presenter)
     }
 }
